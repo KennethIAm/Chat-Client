@@ -47,9 +47,11 @@
     <Compile Include="ICommunicationHandler.cs" />
     <Compile Include="IConnect.cs" />
     <Compile Include="Message.cs" />
+    <Compile Include="MessageBody.cs" />
     <Compile Include="MessageFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="User.cs" />
     <Compile Include="SocketHandler.cs" />
     <Compile Include="SymmetricMessage.cs" />
     <Compile Include="AsymmetricMessage.cs" />

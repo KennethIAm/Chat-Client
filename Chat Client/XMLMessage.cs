@@ -9,7 +9,7 @@ namespace Chat_Client
     class XMLMessage : Message
     {
 
-        public XMLMessage (string message) : base(message)
+        public XMLMessage (User to, User from, MessageBody mb, byte[] messageBuffer) : base(to, from, mb, messageBuffer)
         {
 
         }

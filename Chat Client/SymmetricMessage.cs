@@ -8,7 +8,7 @@ namespace Chat_Client
 {
     class SymmetricMessage : Message
     {
-        public SymmetricMessage(string message) : base(message)
+        public SymmetricMessage(User to, User from, MessageBody mb) : base(to, from, mb)
         {
 
         }

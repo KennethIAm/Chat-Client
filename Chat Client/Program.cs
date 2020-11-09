@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
+using System.Threading;
 
 namespace Chat_Client
 {
@@ -13,24 +14,48 @@ namespace Chat_Client
 
         static void Main(string[] args)
         {
+            Console.ForegroundColor = ConsoleColor.White;
             Console.Write("Enter Username: ");
-            string userInput = Console.ReadLine();
-            ChatController chatController = new ChatController(Dns.GetHostByName(Dns.GetHostName()).AddressList[0].ToString(),
-                "Placeholder", 1, new SocketHandler(), userInput);
-            chatController.Connect();
+            string userName = Console.ReadLine();
+            Console.Write("Enter Final Receiver IP Digits: ");
+            string receiverIP = "172.16.2." + Console.ReadLine();
+            Console.Write("Enter Receiver's Name: ");
+            string receiverName = Console.ReadLine();
+            ChatController chatController = new ChatController(receiverIP, Dns.GetHostByName(Dns.GetHostName()).AddressList[0].ToString(),
+                1, new SocketHandler(), userName, receiverName);
 
-            Console.ReadLine();
+            Console.Clear();
+            
+            Thread loadingThread = new Thread(new ThreadStart(chatController.Connect));
+
+            loadingThread.Start();
+            while (loadingThread.IsAlive)
+            {
+                Console.WriteLine("LOADING");
+                Console.WriteLine();
+                Console.Write(". ");
+
+                Thread.Sleep(1000);
+
+                Console.Write(". ");
+
+                Thread.Sleep(1000);
+
+                Console.Write(". ");
+
+                Thread.Sleep(1000);
+
+                Console.Clear();
+            }
+
+            chatController.UpdateUI();
+
+            Thread receiveThread = new Thread(new ThreadStart(chatController.ReceiveMessage));
+
+            receiveThread.Start();
+
             while (true)
             {
-                Console.Clear();
-
-                foreach (string s in chatController.ChatLog)
-                {
-                    Console.WriteLine(s);
-                }
-                Console.WriteLine();
-                Console.WriteLine("_________________________________________________________");
-                Console.Write("Enter Message: ");
                 chatController.SendMessage(Console.ReadLine());
             }
         }

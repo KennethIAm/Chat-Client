@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace Chat_Client
 {
-    class AsymmetricMessage : Message
+    public class MessageBody
     {
-        public AsymmetricMessage(User to, User from, MessageBody mb) : base(to, from, mb)
-        {
+        public string Body { get; set; }
 
+        public MessageBody(string body)
+        {
+            Body = body;
         }
     }
 }

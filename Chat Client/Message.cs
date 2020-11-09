@@ -8,18 +8,27 @@ namespace Chat_Client
 {
     public class Message
     {
-        private string messageString;
-        private string receiverIP;
-        private string senderIP;
-        public string MessageString { get => messageString; set => messageString = value; }
-        public string ReceiverIP { get => receiverIP; set => receiverIP = value; }
-        public string SenderIP { get => senderIP; set => senderIP = value; }
+        public User To { get; set; }
+        public User From { get; set; }
+        public MessageBody Mb { get; set; }
+        public byte[] MessageBuffer { get; set; }
 
-        public Message(string message)
+        public Message(User to, User from, MessageBody mb, byte[] messageBuffer)
         {
-            MessageString = message;
-            ReceiverIP = receiverIP;
-            SenderIP = senderIP;
+            To = to;
+            From = from;
+            Mb = mb;
+            MessageBuffer = messageBuffer;
+        }
+
+        public Message(User to, User from, MessageBody mb)
+        {
+            To = to;
+            From = from;
+            Mb = mb;
+
+            MessageBuffer = Encoding.ASCII.GetBytes(From.Name + ":" + From.Ip + ":" + To.Name + ":" + From.Ip + ":" + Mb.Body + "\r\n");
+
         }
     }
 }
